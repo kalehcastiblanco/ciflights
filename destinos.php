@@ -11,7 +11,7 @@ if (!$enlace) {
 }
 
 //Insertar registro
-$destino = $_GET["destino"];
+
 
 $query= "SELECT * ";
 $query.= "FROM destinos ";
@@ -43,7 +43,7 @@ $resultado = mysqli_query($enlace, $query);
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
-        <link rel="icon" href="img/avion.ico">
+        <link rel="icon" href="img/avion.png">
     </head>
 
     <body>
@@ -176,7 +176,7 @@ $resultado = mysqli_query($enlace, $query);
                         <div class="footer-widget">
                             <h2>Ubicación</h2>
                             <div class="contact-info">
-                                <p><i class="fa fa-map-marker"></i>Bog0otá, Colombia</p>
+                                <p><i class="fa fa-map-marker"></i>Bogotá, Colombia</p>
                                 <p><i class="fa fa-envelope"></i>ciflights@gmail.com</p>
                                 <p><i class="fa fa-phone"></i>314-254-11-15</p>
                             </div>
