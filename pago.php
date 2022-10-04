@@ -1,8 +1,38 @@
+<?php
+
+//Conexion a base de datos
+$enlace = mysqli_connect("127.0.0.1", "root", "", "ciflights");
+
+if (!$enlace) {
+    echo "Error: No se pudo conectar a MySQL." . PHP_EOL;
+    echo "errno de depuración: " . mysqli_connect_errno() . PHP_EOL;
+    echo "error de depuración: " . mysqli_connect_error() . PHP_EOL;
+    //    header('Location: login.php?status=0&msg=Error al guardar registro: ' . mysqli_connect_error());
+}
+
+//Insertar registro
+$destino = $_POST["destino"];
+
+$query= "SELECT * ";
+$query.= "FROM destinos ";
+$query.= "WHERE id= $destino ";
+$resultado = mysqli_query($enlace, $query);
+
+$row = mysqli_fetch_array($resultado);
+$total = sizeof($_POST["chairs"]) * $row["price"];
+//Consulta de otros destinos
+
+//Fin consulta de otros destinos
+mysqli_free_result($resultado);
+
+mysqli_close($enlace);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>C.I. FLIGHTS - Armenia</title>
+        <title>C.I. FLIGHTS - Pago <?php echo $row["name"] ?></title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="eCommerce HTML Template Free Download" name="keywords">
         <meta content="eCommerce HTML Template Free Download" name="description">
@@ -170,90 +200,43 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label>Número de Tarjeta</label>
-                                            <input class="form-control" type="text" placeholder="State">
+                                            <input class="form-control" type="text" placeholder="Número de Tarjeta">
                                         </div>
                                         <div class="col-md-6">
-                                            <label>ZIP Code</label>
-                                            <input class="form-control" type="text" placeholder="ZIP Code">
+                                            <label>Fecha de Vencimiento</label>
+                                            <input class="form-control" type="text" placeholder="Fecha de Vencimiento">
                                         </div>
+                                        <div class="col-md-6">
+                                            <label>CVV</label>
+                                            <input class="form-control" type="text" placeholder="CVV">
+                                        </div>
+                                        <div class="col-md-6">
+                                        <label>Tipo de Tarjeta</label>
+                                        <select class="custom-select">
+                                            <option selected>American Express</option>
+                                            <option>Visa</option>
+                                            <option>Diners</option>
+                                            <option>Mastercard</option>
+                                        </select>
                                     </div>
-                                
+                                </div>                             
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="checkout-inner">
                             <div class="checkout-summary">
-                                <h1>Cart Total</h1>
-                                <p>Product Name<span>$99</span></p>
-                                <p class="sub-total">Sub Total<span>$99</span></p>
-                                <p class="ship-cost">Shipping Cost<span>$1</span></p>
-                                <h2>Grand Total<span>$100</span></h2>
+                                <h1>Total</h1>
+                                <p>Vuelo(s)<span><?php echo number_format($row["price"], 2) ?></span></p>
+                                <p class="sub-total">Cantidad<span><?php echo sizeof($_POST["chairs"])?></span></p>
+                                <h2>Total<span><?php echo number_format($total, 2) ?></span></h2>
                             </div>
-
                             <div class="checkout-payment">
-                                <div class="payment-methods">
-                                    <h1>Payment Methods</h1>
-                                    <div class="payment-method">
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" class="custom-control-input" id="payment-1" name="payment">
-                                            <label class="custom-control-label" for="payment-1">Paypal</label>
-                                        </div>
-                                        <div class="payment-content" id="payment-1-show">
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tincidunt orci ac eros volutpat maximus lacinia quis diam.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="payment-method">
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" class="custom-control-input" id="payment-2" name="payment">
-                                            <label class="custom-control-label" for="payment-2">Payoneer</label>
-                                        </div>
-                                        <div class="payment-content" id="payment-2-show">
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tincidunt orci ac eros volutpat maximus lacinia quis diam.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="payment-method">
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" class="custom-control-input" id="payment-3" name="payment">
-                                            <label class="custom-control-label" for="payment-3">Check Payment</label>
-                                        </div>
-                                        <div class="payment-content" id="payment-3-show">
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tincidunt orci ac eros volutpat maximus lacinia quis diam.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="payment-method">
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" class="custom-control-input" id="payment-4" name="payment">
-                                            <label class="custom-control-label" for="payment-4">Direct Bank Transfer</label>
-                                        </div>
-                                        <div class="payment-content" id="payment-4-show">
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tincidunt orci ac eros volutpat maximus lacinia quis diam.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="payment-method">
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" class="custom-control-input" id="payment-5" name="payment">
-                                            <label class="custom-control-label" for="payment-5">Cash on Delivery</label>
-                                        </div>
-                                        <div class="payment-content" id="payment-5-show">
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tincidunt orci ac eros volutpat maximus lacinia quis diam.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="checkout-btn">
-                                    <button>Place Order</button>
+                                    <a class= "btn" href= "index.php">Pagar</a>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -280,11 +263,11 @@
                         <div class="footer-widget">
                             <h2>Siguenos</h2>
                             <div class="contact-info">
-                                <div class="social">
-                                    <a href=""><i class="fab fa-twitter"></i></a>
-                                    <a href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a href=""><i class="fab fa-linkedin-in"></i></a>
-                                    <a href=""><i class="fab fa-instagram"></i></a>
+                            <div class="social">
+                                    <a href="https://twitter.com/CCIFLIGHTS"><i class="fab fa-twitter"></i></a>
+                                    <a href="https://www.facebook.com/profile.php?id=100086284759401"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="https://www.linkedin.com/in/c-i-f-ciflights-1a7406250/"><i class="fab fa-linkedin-in"></i></a>
+                                    <a href="https://www.instagram.com/ciflights/?hl=es-la"><i class="fab fa-instagram"></i></a>
                                     <a href="https://www.youtube.com/channel/UCQmkyDAjt19l_uSdmahvXgg"><i class="fab fa-youtube"></i></a>
                                 </div>
                             </div>

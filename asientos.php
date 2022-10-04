@@ -102,7 +102,7 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.php">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="destinos.php">Destinos</a></li>
-                    <li class="breadcrumb-item active">Armenia</li>
+                    <li class="breadcrumb-item active">Asientos</li>
                 </ul>
             </div>
         </div>
@@ -113,7 +113,7 @@
                         <h1>Escoge tu asiento</h1>
                     </div>
                     <div class="row align-items-center product-slider product-slider-4">
-                        <form method="post" action="prueba.php">
+                        <form method="post" action="pago.php">
                         <!-- partial:index.partial.html -->
                         <div class="plane" style="width: 500px">
                         <div class="cockpit">
@@ -382,7 +382,8 @@
                             
                         </div>
                         </div>
-                        <input type="submit" value="guardar">
+                        <input type="hidden" id="destino" name="destino" value="<?php echo $_GET['destino'] ?>" readonly>
+                        <input class="form-control" type="submit" value="guardar">
                         </form>
                     </div>    
             </div>
@@ -407,10 +408,10 @@
                             <h2>Siguenos</h2>
                             <div class="contact-info">
                                 <div class="social">
-                                    <a href=""><i class="fab fa-twitter"></i></a>
-                                    <a href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a href=""><i class="fab fa-linkedin-in"></i></a>
-                                    <a href=""><i class="fab fa-instagram"></i></a>
+                                    <a href="https://twitter.com/CCIFLIGHTS"><i class="fab fa-twitter"></i></a>
+                                    <a href="https://www.facebook.com/profile.php?id=100086284759401"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="https://www.linkedin.com/in/c-i-f-ciflights-1a7406250/"><i class="fab fa-linkedin-in"></i></a>
+                                    <a href="https://www.instagram.com/ciflights/?hl=es-la"><i class="fab fa-instagram"></i></a>
                                     <a href="https://www.youtube.com/channel/UCQmkyDAjt19l_uSdmahvXgg"><i class="fab fa-youtube"></i></a>
                                 </div>
                             </div>

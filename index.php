@@ -1,3 +1,23 @@
+<?php
+
+//Conexion a base de datos
+$enlace = mysqli_connect("127.0.0.1", "root", "", "ciflights");
+
+if (!$enlace) {
+    echo "Error: No se pudo conectar a MySQL." . PHP_EOL;
+    echo "errno de depuración: " . mysqli_connect_errno() . PHP_EOL;
+    echo "error de depuración: " . mysqli_connect_error() . PHP_EOL;
+    //    header('Location: login.php?status=0&msg=Error al guardar registro: ' . mysqli_connect_error());
+}
+
+//Insertar registro
+
+
+$query= "SELECT * ";
+$query.= "FROM destinos ";
+$resultado = mysqli_query($enlace, $query);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -112,184 +132,54 @@
                 <div class="section-header">
                     <h1>Vuelos Recomendados</h1>
                 </div>
-                <div class="row align-items-center product-slider product-slider-4">
-                    <div class="col-lg-3">
-                        <div class="product-item":>
-                            <div class="product-title">
-                                <a href="#">Medellín</a>
-                                <div class="ratting">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                            </div>
-                            <div class="product-image">
-                                <a href="product-detail.html">
-                                    <img src="img/medellin.jpg" alt="Product Image">
-                                </a>
-                                <div class="product-action">
-                                    <a href="#"><i class="fa fa-search"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-price">
-                                <h3><span>$</span>99</h3>
-                                <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Ver</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="product-item">
-                            <div class="product-title">
-                                <a href="#">Cartagena</a>
-                                <div class="ratting">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                            </div>
-                            <div class="product-image">
-                                <a href="product-detail.html">
-                                    <img src="img/cartagena.jpg" alt="Product Image">
-                                </a>
-                                <div class="product-action">
-                                    <a href="#"><i class="fa fa-search"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-price">
-                                <h3><span>$</span>99</h3>
-                                <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Ver</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="product-item">
-                            <div class="product-title">
-                                <a href="#">Cali</a>
-                                <div class="ratting">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                            </div>
-                            <div class="product-image">
-                                <a href="product-detail.html">
-                                    <img src="img/cali.jpg" alt="Product Image">
-                                </a>
-                                <div class="product-action">
-                                    <a href="#"><i class="fa fa-search"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-price">
-                                <h3><span>$</span>99</h3>
-                                <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Ver</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="product-item">
-                            <div class="product-title">
-                                <a href="#">Santa Marta</a>
-                                <div class="ratting">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                            </div>
-                            <div class="product-image">
-                                <a href="product-detail.html">
-                                    <img src="img/smarta.jpg" alt="Product Image">
-                                </a>
-                                <div class="product-action">
-                                    <a href="#"><i class="fa fa-search"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-price">
-                                <h3><span>$</span>99</h3>
-                                <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Ver</a>
-                            </div>
-                        </div>                       
+                <div class="product-view">
+            
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <?php
+                            while ($row = mysqli_fetch_assoc($resultado)) {
+                            ?>
+                                    <div class="col-md-4">
+                                        <div class="product-item">
+                                            <div class="product-title">
+                                                <a href="seleccionar_viaje.php?destino=<?php echo $row["id"] ?>"><?php echo $row["name"] ?></a>
+                                                <div class="ratting">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                            </div>
+                                            <div class="product-image">
+                                                <a href="seleccionar_viaje.php?destino=<?php echo $row["id"] ?>">
+                                                    <img src="img/<?php echo $row["id"] ?>.jpg" alt="Product Image">
+                                                </a>
+                                                <div class="product-action">
+                                                    <a href="seleccionar_viaje.php?destino=<?php echo $row["id"] ?>"><i class="fa fa-search"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="product-price">
+                                                <h3><span>$</span><?php echo $row["price"] ?></h3>
+                                                <a class="btn" href="seleccionar_viaje.php?destino=<?php echo $row["id"] ?>"><i class="fa fa-shopping-cart"></i>Ver</a>
+                                            </div>
+                                        </div>
+                                    </div>   
+                                <?php
+                            }
+                            ?>                               
+                        </div>                        
                     </div>
                 </div>
+            </div>
+        </div>
             </div>
         </div>
         <!-- Featured Product End -->              
         
         <!-- Recent Product Start -->
-        <div class="recent-product product">
-            <div class="container-fluid">
-                <div class="section-header">
-                    <h1>Otros Vuelos</h1>
-                </div>
-                <div class="row align-items-center product-slider product-slider-4">
-                    <div class="col-lg-3">
-                        <div class="product-item":>
-                            <div class="product-title">
-                                <a href="#">Armenia</a>
-                                <div class="ratting">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                            </div>
-                            <div class="product-image">
-                                <a href="product-detail.html">
-                                    <img src="img/armenia.jpg" alt="Product Image">
-                                </a>
-                                <div class="product-action">
-                                    <a href="#"><i class="fa fa-search"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-price">
-                                <h3><span>$</span>99</h3>
-                                <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Ver</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="product-item">
-                            <div class="product-title">
-                                <a href="#">San Andrés</a>
-                                <div class="ratting">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                            </div>
-                            <div class="product-image">
-                                <a href="product-detail.html">
-                                    <img src="img/sandres.jpg" alt="Product Image">
-                                </a>
-                                <div class="product-action">
-                                    <a href="#"><i class="fa fa-search"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-price">
-                                <h3><span>$</span>99</h3>
-                                <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Ver</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="product-item"> 
-                        </div>                       
-                    </div>
-                </div>
-            </div>
-        </div>  
+        
         <!-- Recent Product End -->
         <div class="brand">
             <div class="container-fluid">
@@ -321,11 +211,11 @@
                         <div class="footer-widget">
                             <h2>Siguenos</h2>
                             <div class="contact-info">
-                                <div class="social">
-                                    <a href=""><i class="fab fa-twitter"></i></a>
-                                    <a href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a href=""><i class="fab fa-linkedin-in"></i></a>
-                                    <a href=""><i class="fab fa-instagram"></i></a>
+                            <div class="social">
+                                    <a href="https://twitter.com/CCIFLIGHTS"><i class="fab fa-twitter"></i></a>
+                                    <a href="https://www.facebook.com/profile.php?id=100086284759401"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="https://www.linkedin.com/in/c-i-f-ciflights-1a7406250/"><i class="fab fa-linkedin-in"></i></a>
+                                    <a href="https://www.instagram.com/ciflights/?hl=es-la"><i class="fab fa-instagram"></i></a>
                                     <a href="https://www.youtube.com/channel/UCQmkyDAjt19l_uSdmahvXgg"><i class="fab fa-youtube"></i></a>
                                 </div>
                             </div>
@@ -365,4 +255,12 @@
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
     </body>
-</html>   
+</html>
+
+<?php
+
+mysqli_free_result($resultado);
+
+mysqli_close($enlace);
+
+?>

@@ -213,12 +213,12 @@
                 newVal = 0;
             }
         }
-        $button.parent().find('input').val(newVal);
+        $("#quantity").val(newVal);
     });
     
 
     $('#confirm').on('click', function () {
-        document.location.href = "asientos_armenia.php?quantity=" + $("#quantity").val();
+        document.location.href = "asientos.php?quantity=" + $("#quantity").val()+"&destino="+$("#destino").val();
     });
     
     // Shipping address show hide
