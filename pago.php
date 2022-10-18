@@ -1,68 +1,74 @@
+<!-- Inicio php -->
 <?php
 
 //Conexion a base de datos
 $enlace = mysqli_connect("127.0.0.1", "root", "", "ciflights");
 
+//Mensaje de error
 if (!$enlace) {
     echo "Error: No se pudo conectar a MySQL." . PHP_EOL;
     echo "errno de depuración: " . mysqli_connect_errno() . PHP_EOL;
     echo "error de depuración: " . mysqli_connect_error() . PHP_EOL;
-    //    header('Location: login.php?status=0&msg=Error al guardar registro: ' . mysqli_connect_error());
 }
 
-//Insertar registro
+//Presentar Información en la URL
 $destino = $_POST["destino"];
 
+//query seleccionar "id" de la tabla "destinos"
 $query= "SELECT * ";
 $query.= "FROM destinos ";
 $query.= "WHERE id= $destino ";
+
+//Consulta a la base de datos
 $resultado = mysqli_query($enlace, $query);
 
+//Traer los resultados y los guarda
 $row = mysqli_fetch_array($resultado);
-$total = sizeof($_POST["chairs"]) * $row["price"];
-//Consulta de otros destinos
 
-//Fin consulta de otros destinos
+//Crea la variable $total multiplicando la cantidad de sillas contadas con el precio
+$total = sizeof($_POST["chairs"]) * $row["price"];
+
+//limpiar memoria de la consulta
 mysqli_free_result($resultado);
 
+//cerrar consulta mysql
 mysqli_close($enlace);
 
 ?>
+<!-- Inicio HTML -->
 <!DOCTYPE html>
 <html lang="en">
+    <!-- Inicio head -->
     <head>
         <meta charset="utf-8">
-        <title>C.I. FLIGHTS - Pago <?php echo $row["name"] ?></title>
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <meta content="eCommerce HTML Template Free Download" name="keywords">
-        <meta content="eCommerce HTML Template Free Download" name="description">
+        <!-- Titulo Pestaña -->
+        <title>C.I. FLIGHTS - <?php echo $row["name"];?></title>
 
-        <!-- Favicon -->
-        <link href="img/favicon.ico" rel="icon">
-
-        <!-- Google Fonts -->
+        <!-- Conexión Google Fonts (Fuentes)-->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap" rel="stylesheet">
 
-        <!-- CSS Libraries -->
+        <!-- Conexión Librerías CSS (Estilos)-->
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
         <link href="lib/slick/slick.css" rel="stylesheet">
         <link href="lib/slick/slick-theme.css" rel="stylesheet">
 
-        <!-- Template Stylesheet -->
+        <!-- Conexión Carpeta style.css (Estilos)-->
         <link href="css/style.css" rel="stylesheet">
-        <link href="css/seating.css" rel="stylesheet">
+
+        <!-- Insertar Icono en pestaña -->
         <link rel="icon" href="img/avion.ico">
     </head>
-
+    
+    <!-- Inicio body -->
     <body>
-        <!-- Top bar Start -->
+        <!-- Barra Inicial-->
         <div class="top-bar">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-6">
                         <i class="fa fa-envelope"></i>
-                        ciflights.user@gmail.com
+                        ciflights.users@gmail.com
                     </div>
                     <div class="col-sm-6">
                         <i class="fa fa-phone-alt"></i>
@@ -71,23 +77,20 @@ mysqli_close($enlace);
                 </div>
             </div>
         </div>
-        <!-- Top bar End -->
+        <!-- Final Barra Inicial -->
         
-        <!-- Nav Bar Start -->
+        <!-- Barra de Opciones -->
         <div class="nav">
             <div class="container-fluid">
                 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-                    <a href="#" class="navbar-brand">MENU</a>
-                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <!-- Opciones Principales -->
                         <div class="navbar-nav mr-auto">
                             <a href="index.php" class="nav-item nav-link active">Inicio</a>
                             <a href="destinos.php" class="nav-item nav-link">Destinos</a>
                             <a href="nosotros.php" class="nav-item nav-link">Nosotros</a>
                         </div>
+                        <!-- Opciones Usuarios -->
                         <div class="navbar-nav ml-auto">
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Usuario</a>
@@ -101,12 +104,13 @@ mysqli_close($enlace);
                 </nav>
             </div>
         </div>
-        <!-- Nav Bar End -->      
+        <!-- Final Barra de Opciones -->      
         
-        <!-- Bottom Bar Start -->
+        <!-- Barra Posterior -->
         <div class="bottom-bar">
             <div class="container-fluid">
                 <div class="row align-items-center">
+                    <!-- Logo Prinicipal -->
                     <div class="col-md-3">
                         <div class="logo">
                             <a href="index.php">
@@ -114,6 +118,7 @@ mysqli_close($enlace);
                             </a>
                         </div>
                     </div>
+                    <!-- Barra de Busqueda -->
                     <div class="col-md-6">
                         <div class="search">
                             <input type="text" placeholder="Buscar">
@@ -123,15 +128,16 @@ mysqli_close($enlace);
                 </div>
             </div>
         </div>
-        <!-- Bottom Bar End --> 
+        <!-- Final Barra Posterior -->
         
-        <!-- Checkout Start -->
+        <!-- Zona Pago -->
         <div class="checkout">
             <div class="container-fluid"> 
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="checkout-inner">
                             <div class="billing-address">
+                                <!-- Datos Titular Tarjeta -->
                                 <h2>Datos Titular de Tarjeta</h2>
                                 <div class="row">
                                     <div class="col-md-6">
@@ -182,20 +188,8 @@ mysqli_close($enlace);
                                         <label>Dirección</label>
                                         <input class="form-control" type="text" placeholder="Dirección">
                                     </div>
-                                    
-                                    <!-- <div class="col-md-12">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="newaccount">
-                                            <label class="custom-control-label" for="newaccount">Create an account</label>
-                                        </div>
-                                    </div> -->
-                                    <!-- <div class="col-md-12">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="shipto">
-                                            <label class="custom-control-label" for="shipto">Ship to different address</label>
-                                        </div>
-                                    </div> -->
                                 </div>
+                                    <!-- Datos de Tarjeta -->
                                     <h2>Datos de la tarjeta</h2>
                                     <div class="row">
                                         <div class="col-md-6">
@@ -223,32 +217,37 @@ mysqli_close($enlace);
                             </div>
                         </div>
                     </div>
+                    <!-- Zona Total -->
                     <div class="col-lg-4">
                         <div class="checkout-inner">
                             <div class="checkout-summary">
                                 <h1>Total</h1>
+                                <!-- Precio traido de la base de datos -->
                                 <p>Vuelo(s)<span><?php echo number_format($row["price"], 2) ?></span></p>
+                                <!-- Número de Sillas traido de la cantidad seleccionada -->
                                 <p class="sub-total">Cantidad<span><?php echo sizeof($_POST["chairs"])?></span></p>
+                                <!-- Variable $total -->
                                 <h2>Total<span><?php echo number_format($total, 2) ?></span></h2>
                             </div>
+                            <!-- Botón Total -->
                             <div class="checkout-payment">
                                 <div class="checkout-btn">
                                     <a class= "btn" href= "index.php">Pagar</a>
                                 </div>
                             </div>
-                            
                         </div>
                     </div>
+                    <!-- Final Zona Total -->
                 </div>
             </div>
         </div>
-        <!-- Checkout End -->
+        <!-- Final Zona Pago -->
         
-        <!-- Footer Start -->
-        <!-- Footer Start -->
+        <!-- Footer Contactos -->
         <div class="footer">
             <div class="container-fluid">
                 <div class="row">
+                    <!-- Información de Ubicación -->
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-widget">
                             <h2>Ubicación</h2>
@@ -258,7 +257,8 @@ mysqli_close($enlace);
                                 <p><i class="fa fa-phone"></i>314-254-11-15</p>
                             </div>
                         </div>
-                    </div>                    
+                    </div>
+                    <!-- Información Redes Sociales -->
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-widget">
                             <h2>Siguenos</h2>
@@ -276,35 +276,33 @@ mysqli_close($enlace);
                 </div>
             </div>
         </div>
-        <!-- Footer End -->
+        <!-- Final Footer Contactos -->
         
-        <!-- Footer Bottom Start -->
+        <!-- Footer Derechos Reservados -->
         <div class="footer-bottom">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 copyright">
                         <p>Copyright &copy; <a href="#">Colombian International Flights</a>. Derechos Reservados</p>
                     </div>
-
-                    <div class="col-md-6 template-by">
-						<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->					
-                        
-                    </div>
                 </div>
             </div>
         </div>
-        <!-- Footer Bottom End -->       
+        <!-- Final Footer Derechos Reservados -->       
         
-        <!-- Back to Top -->
+        <!-- Boton de Vuelta al Inicio -->
         <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
         
-        <!-- JavaScript Libraries -->
+        <!-- Conexión Script Java -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Conexión Librerias Java -->
         <script src="lib/easing/easing.min.js"></script>
         <script src="lib/slick/slick.min.js"></script>
-        
-        <!-- Template Javascript -->
+
+        <!-- Conexión Template Java -->
         <script src="js/main.js"></script>
     </body>
-</html>  
+</html>
+

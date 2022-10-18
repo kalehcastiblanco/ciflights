@@ -1,131 +1,134 @@
+<!-- Inicio php -->
 <?php
 
 //Conexion a base de datos
 $enlace = mysqli_connect("127.0.0.1", "root", "", "ciflights");
 
+//Mensaje de error
 if (!$enlace) {
     echo "Error: No se pudo conectar a MySQL." . PHP_EOL;
     echo "errno de depuración: " . mysqli_connect_errno() . PHP_EOL;
     echo "error de depuración: " . mysqli_connect_error() . PHP_EOL;
-    //    header('Location: login.php?status=0&msg=Error al guardar registro: ' . mysqli_connect_error());
 }
 
-//Insertar registro
+//Presentar Información en la URL
 $destino = $_GET["destino"];
 
+//query seleccionar "id" de la tabla "destinos"
 $query= "SELECT * ";
 $query.= "FROM destinos ";
 $query.= "WHERE id= $destino ";
+
+//Consulta a la base de datos
 $resultado = mysqli_query($enlace, $query);
 
+//Traer los resultados y los guarda
 $row = mysqli_fetch_array($resultado);
 
-//Consulta de otros destinos
-
-//Fin consulta de otros destinos
+//limpiar memoria de la consulta
 mysqli_free_result($resultado);
 
+//cerrar consulta mysql
 mysqli_close($enlace);
 
 ?>
+
+<!-- Inicio HTML -->
 <!DOCTYPE html>
 <html lang="en">
+    <!-- Inicio head -->
     <head>
         <meta charset="utf-8">
+        <!-- Titulo Pestaña con nombre del vuelo, traido de la base de datos-->
         <title>C.I. FLIGHTS - <?php echo $row["name"] ?></title>
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <meta content="eCommerce HTML Template Free Download" name="keywords">
-        <meta content="eCommerce HTML Template Free Download" name="description">
 
-        <!-- Favicon -->
-        <link href="img/favicon.ico" rel="icon">
+<!-- Conexión Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap" rel="stylesheet">
 
-        <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap" rel="stylesheet">
+<!-- Conexión Librerías CSS -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="lib/slick/slick.css" rel="stylesheet">
+<link href="lib/slick/slick-theme.css" rel="stylesheet">
 
-        <!-- CSS Libraries -->
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-        <link href="lib/slick/slick.css" rel="stylesheet">
-        <link href="lib/slick/slick-theme.css" rel="stylesheet">
+<!-- Conexión Carpeta style.css -->
+<link href="css/style.css" rel="stylesheet">
 
-        <!-- Template Stylesheet -->
-        <link href="css/style.css" rel="stylesheet">
-        <link href="css/seating.css" rel="stylesheet">
-        <link rel="icon" href="img/avion.ico">
-    </head>
+<!-- Insertar Icono en pestaña -->
+<link rel="icon" href="img/avion.ico">
+</head>
 
-    <body>
-        <!-- Top bar Start -->
-        <div class="top-bar">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <i class="fa fa-envelope"></i>
-                        ciflights.user@gmail.com
-                    </div>
-                    <div class="col-sm-6">
-                        <i class="fa fa-phone-alt"></i>
-                        314-254-11-15
-                    </div>
+<!-- Inicio body -->
+<body>
+<!-- Barra Inicial-->
+<div class="top-bar">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <i class="fa fa-envelope"></i>
+                ciflights.users@gmail.com
+            </div>
+            <div class="col-sm-6">
+                <i class="fa fa-phone-alt"></i>
+                314-254-11-15
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Final Barra Inicial -->
+
+<!-- Barra de Opciones -->
+<div class="nav">
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                <!-- Opciones Principales -->
+                <div class="navbar-nav mr-auto">
+                    <a href="index.php" class="nav-item nav-link">Inicio</a>
+                    <a href="destinos.php" class="nav-item nav-link">Destinos</a>
+                    <a href="nosotros.php" class="nav-item nav-link">Nosotros</a>
                 </div>
-            </div>
-        </div>
-        <!-- Top bar End -->
-        
-        <!-- Nav Bar Start -->
-        <div class="nav">
-            <div class="container-fluid">
-                <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-                    <a href="#" class="navbar-brand">MENU</a>
-                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                        <div class="navbar-nav mr-auto">
-                            <a href="index.php" class="nav-item nav-link active">Inicio</a>
-                            <a href="destinos.php" class="nav-item nav-link">Destinos</a>
-                            <a href="nosotros.php" class="nav-item nav-link">Nosotros</a>
-                        </div>
-                        <div class="navbar-nav ml-auto">
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Usuario</a>
-                                <div class="dropdown-menu">
-                                    <a href="login.php" class="dropdown-item">Ingresar</a>
-                                    <a href="login.php" class="dropdown-item">Registrarse</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-            </div>
-        </div>
-        <!-- Nav Bar End -->      
-        
-        <!-- Bottom Bar Start -->
-        <div class="bottom-bar">
-            <div class="container-fluid">
-                <div class="row align-items-center">
-                    <div class="col-md-3">
-                        <div class="logo">
-                            <a href="index.php">
-                                <img src="img/logo.png" alt="Logo">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="search">
-                            <input type="text" placeholder="Buscar">
-                            <button><i class="fa fa-search"></i></button>
+                <!-- Opciones Usuarios -->
+                <div class="navbar-nav ml-auto">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Usuario</a>
+                        <div class="dropdown-menu">
+                            <a href="login.php" class="dropdown-item">Ingresar</a>
+                            <a href="login.php" class="dropdown-item">Registrarse</a>
                         </div>
                     </div>
                 </div>
             </div>
+        </nav>
+    </div>
+</div>
+<!-- Final Barra de Opciones -->      
+
+<!-- Barra Posterior -->
+<div class="bottom-bar">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <!-- Logo Prinicipal -->
+            <div class="col-md-3">
+                <div class="logo">
+                    <a href="index.php">
+                        <img src="img/logo.png" alt="Logo">
+                    </a>
+                </div>
+            </div>
+            <!-- Barra de Busqueda -->
+            <div class="col-md-6">
+                <div class="search">
+                    <input type="text" placeholder="Buscar">
+                    <button><i class="fa fa-search"></i></button>
+                </div>
+            </div>
         </div>
-        <!-- Bottom Bar End --> 
+    </div>
+</div>
+<!-- Final Barra Posterior --> 
         
-        <!-- Breadcrumb Start -->
+        <!-- Recorrido Página -->
         <div class="breadcrumb-wrap">
             <div class="container-fluid">
                 <ul class="breadcrumb">
@@ -135,9 +138,9 @@ mysqli_close($enlace);
                 </ul>
             </div>
         </div>
-        <!-- Breadcrumb End -->
+        <!-- Final Recorrido Página -->
         
-        <!-- Product Detail Start -->
+        <!-- Inicio Zona Destino-->
         <div class="product-detail">
             <div class="container-fluid">
                 <div class="row">
@@ -146,11 +149,13 @@ mysqli_close($enlace);
                             <div class="row align-items-center">
                                 <div class="col-md-5">
                                     <div class="product-slider-single normal-slider">
+                                        <!-- Nombre de la imagen del vuelo, igual a la id del vuelo -->
                                         <img src="img/<?php echo $destino ?>.jpg" alt="Product Image">
                                     </div>
                                 </div>
                                 <div class="col-md-7">
                                     <div class="product-content">
+                                        <!-- Titulo traido de la base de datos -->
                                         <div class="title"><h2><?php echo $row["name"] ?></h2></div>
                                         <div class="ratting">
                                             <i class="fa fa-star"></i>
@@ -161,18 +166,24 @@ mysqli_close($enlace);
                                         </div>
                                         <div class="price">
                                             <h4>Precio:</h4>
+                                            <!-- Precio traido de la base de datos -->
                                             <p><?php echo number_format($row["price"], 2) ?></p>
                                         </div>
+                                        <!-- Zona Cantidad -->
                                         <div class="quantity">
                                             <h4>Cantidad:</h4>
                                             <div class="qty">
+                                                <!-- Botón menos -->
                                                 <button class="btn-minus"><i class="fa fa-minus"></i></button>
+                                                <!-- Número de asientos -->
                                                 <input type="text" id="quantity" name="quantity" value="1" readonly>
+                                                <!-- Id de vuelo escondida -->
                                                 <input type="hidden" id="destino" name="destino" value="<?php echo $_GET['destino'] ?>" readonly>
+                                                <!-- Botón más -->
                                                 <button class="btn-plus"><i class="fa fa-plus"></i></button>
                                             </div>
                                         </div>
-                                        
+                                        <!-- Botón Comprar -->
                                         <div class="action">
                                             <a class="btn" id="confirm"><i class="fa fa-shopping-bag"></i>Comprar</a>
                                         </div>
@@ -180,7 +191,9 @@ mysqli_close($enlace);
                                 </div>
                             </div>
                         </div>
-                        
+                        <!-- Final Zona Destino -->
+
+                        <!-- Zona Detalles -->
                         <div class="row product-detail-bottom">
                             <div class="col-lg-12">
                                 <ul class="nav nav-pills nav-justified">
@@ -196,20 +209,24 @@ mysqli_close($enlace);
                                 </ul>
 
                                 <div class="tab-content">
+                                    <!-- Descripción -->
                                     <div id="description" class="container tab-pane active">
                                         <h4>Descripción del Destino</h4>
+                                        <!-- Texto Descripción traida de la base de datoss -->
                                         <?php echo $row["description"] ?>
                                     </div>
+                                    <!-- Especificación -->
                                     <div id="specification" class="container tab-pane fade">
                                         <h4>Especificación del Vuelo</h4>
                                         <ul>
-                                            <li>Empresa: <?php echo $row["company"] ?></li>
-                                            <li>Horas de Vuelo: <?php echo $row["hours"] ?></li>
-                                            <li>Avión: <?php echo $row["airplane"] ?></li>
-                                            <li>Capacidad del Avión: <?php echo $row["capacity"] ?> Pasajeros</li>
-                                            <li>Peso máximo: <?php echo number_format($row["weight"], 2) ?> kg</li>
+                                             <li>Empresa: <?php echo $row["company"] ?></li><!--Empresa traida de la base de datos-->
+                                            <li>Horas de Vuelo: <?php echo $row["hours"] ?></li><!--Horas traidas de la base de datos-->
+                                            <li>Avión: <?php echo $row["airplane"] ?></li><!--Avión traido de la base de datos-->
+                                            <li>Capacidad del Avión: <?php echo $row["capacity"] ?> Pasajeros</li><!--Capacidad traida de la base de datos-->
+                                            <li>Peso máximo: <?php echo number_format($row["weight"], 2) ?> kg</li><!--Peso traido de la base de datos-->
                                         </ul>
                                     </div>
+                                    <!-- Opinión -->
                                     <div id="reviews" class="container tab-pane fade">
                                         <div class="reviews-submitted">
                                             <div class="reviewer">Felipe Cuevas<span>13 sep 2022</span></div>
@@ -224,6 +241,7 @@ mysqli_close($enlace);
                                                 Buena organización y puestos muy comodos, bueno para su precio
                                             </p>
                                         </div>
+                                        <!-- Cuadro Opinión -->
                                         <div class="reviews-submit">
                                             <h4>Danos tu opinion:</h4>
                                             <div class="ratting">
@@ -235,15 +253,19 @@ mysqli_close($enlace);
                                             </div>
                                             <div class="row form">
                                                 <div class="col-sm-6">
+                                                    <!-- Cuadro Nombre -->
                                                     <input type="text" placeholder="Nombre">
                                                 </div>
                                                 <div class="col-sm-6">
+                                                    <!-- Cuadro Correo -->
                                                     <input type="email" placeholder="Correo">
                                                 </div>
                                                 <div class="col-sm-12">
+                                                    <!-- Cuadro Opinión -->
                                                     <textarea placeholder="Opinión"></textarea>
                                                 </div>
                                                 <div class="col-sm-12">
+                                                    <!-- Botón Enviar -->
                                                     <button>Enviar</button>
                                                 </div>
                                             </div>
@@ -252,27 +274,17 @@ mysqli_close($enlace);
                                 </div>
                             </div>
                         </div>
-                    </div>    
-                        
-                    
-                    <!-- Side Bar Start -->
-                    <div class="col-lg-4 sidebar">
-                           
                     </div>
-                    <!-- Side Bar End -->
                 </div>
             </div>
         </div>
-        <!-- Product Detail End -->
-        
-        <!-- Brand Start -->
+        <!-- Final Zona Detalles -->
 
-        <!-- Brand End -->
-        
-        <!-- Footer Start -->
+        <!-- Footer Contactos -->
         <div class="footer">
             <div class="container-fluid">
                 <div class="row">
+                    <!-- Información de Ubicación -->
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-widget">
                             <h2>Ubicación</h2>
@@ -282,7 +294,8 @@ mysqli_close($enlace);
                                 <p><i class="fa fa-phone"></i>314-254-11-15</p>
                             </div>
                         </div>
-                    </div>                    
+                    </div>
+                    <!-- Información Redes Sociales -->
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-widget">
                             <h2>Siguenos</h2>
@@ -300,35 +313,32 @@ mysqli_close($enlace);
                 </div>
             </div>
         </div>
-        <!-- Footer End -->
+        <!-- Final Footer Contactos -->
         
-        <!-- Footer Bottom Start -->
+        <!-- Footer Derechos Reservados -->
         <div class="footer-bottom">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 copyright">
                         <p>Copyright &copy; <a href="#">Colombian International Flights</a>. Derechos Reservados</p>
                     </div>
-
-                    <div class="col-md-6 template-by">
-						<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->					
-                        
-                    </div>
                 </div>
             </div>
         </div>
-        <!-- Footer Bottom End -->       
+        <!-- Final Footer Derechos Reservados -->       
         
-        <!-- Back to Top -->
+        <!-- Boton de Vuelta al Inicio -->
         <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
         
-        <!-- JavaScript Libraries -->
+        <!-- Conexión Script Java -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Conexión Librerias Java -->
         <script src="lib/easing/easing.min.js"></script>
         <script src="lib/slick/slick.min.js"></script>
-        
-        <!-- Template Javascript -->
+
+        <!-- Conexión Template Java -->
         <script src="js/main.js"></script>
     </body>
-</html>  
+</html> 

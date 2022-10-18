@@ -31,7 +31,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <i class="fa fa-envelope"></i>
-                        ciflights.user@gmail.com
+                        ciflights.users@gmail.com
                     </div>
                     <div class="col-sm-6">
                         <i class="fa fa-phone-alt"></i>
@@ -128,7 +128,7 @@
                                     </div>  
                                     <div class="col-md-6">
                                         <label>Correo</label>
-                                        <input class="form-control" type="text" placeholder="Correo Electronico" name="email" required>
+                                        <input class="form-control" type="email" placeholder="Correo Electronico" name="email" required>
                                     </div>
                                     <div class="col-md-6">
                                         <label>Documento</label>
